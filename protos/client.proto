@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+service Client {
+    rpc criarPedido (criarPedidoRequest) returns (criarPedidoReply);
+    rpc modificarPedido (modificarPedidoRequest) returns (modificarPedidoReply);
+    rpc listarPedido (listarPedidoRequest) returns (listarPedidoReply);
+    rpc apagarPedido (apagarPedidoRequest) returns (apagarPedidoReply);
+}
+
+message criarPedidoRequest {
+    string clientId = 1;
+}
+
+message criarPedidoReply {
+    string message = 1;
+}
+
+message modificarPedidoRequest {
+    string clientId = 1;
+    string ordemId = 2;
+    string produto = 3;
+    int32 quantidade = 4;
+}
+
+message modificarPedidoReply {
+    string message = 1;
+}
+
+message listarPedidoRequest {
+    string clientId = 1;
+    string ordemId = 2;
+}
+
+message listarPedidoReply {
+  string message = 1;
+}
+
+message apagarPedidoRequest {
+  string clientId = 1;
+    string ordemId = 2;
+}
+
+message apagarPedidoReply {
+  string message = 1;
+}

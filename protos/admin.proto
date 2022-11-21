@@ -1,0 +1,81 @@
+syntax = "proto3";
+
+service Admin {
+    rpc inserirCliente (inserirClienteRequest) returns (inserirClienteReply);
+    rpc modificarCliente (modificarClienteRequest) returns (modificarClienteReply);
+    rpc recuperarCliente (recuperarClienteRequest) returns (recuperarClienteReply);
+    rpc apagarCliente (apagarClienteRequest) returns (apagarClienteReply);
+    rpc inserirProduto (inserirProdutoRequest) returns (inserirProdutoReply);
+    rpc modificarProduto (modificarProdutoRequest) returns (modificarProdutoReply);
+    rpc recuperarProduto (recuperarProdutoRequest) returns (recuperarProdutoReply);
+    rpc apagarProduto (apagarProdutoRequest) returns (apagarProdutoReply);
+}
+
+message inserirClienteRequest {
+	string clientId = 1;
+	string dadosCliente = 2;
+}
+
+message inserirClienteReply {
+  	string message = 1;
+}
+
+message modificarClienteRequest {
+	string clientId = 1;
+	string dadosCliente = 2;
+}
+
+message modificarClienteReply {
+  	string message = 1;
+}
+
+message recuperarClienteRequest {
+  	string clientId = 1;
+}
+
+message recuperarClienteReply {
+  	string message = 1;
+}
+
+message apagarClienteRequest {
+  	string clientId = 1;
+}
+
+message apagarClienteReply {
+  	string message = 1;
+}
+
+message inserirProdutoRequest {
+	string produtoId = 1;
+	string dadosProduto = 2;
+}
+
+message inserirProdutoReply {
+  	string message = 1;
+}
+
+message modificarProdutoRequest {
+	string produtoId = 1;
+	string dadosProduto = 2;
+}
+
+message modificarProdutoReply {
+  	string message = 1;
+}
+
+message recuperarProdutoRequest {
+  	string produtoId = 1;
+}
+
+message recuperarProdutoReply {
+  	string message = 1;
+}
+
+message apagarProdutoRequest {
+  	string produtoId = 1;
+}
+
+message apagarProdutoReply {
+  	string message = 1;
+}
+
