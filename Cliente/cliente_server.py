@@ -92,6 +92,11 @@ class ClientServicer(client_pb2_grpc.ClientServicer):
                 reply.message = 'Esse cliente não tem acesso a esse pedido!'
 
         return reply
+    def listarPedidos(self, request_iterator, context):
+        global dicionarioPedido, dicionarioClient
+        print("Listar Pedido")
+        reply = client_pb2.listarPedidosReply()
+        return reply
     def apagarPedido(self, request_iterator, context):
         print("Apagar Pedido")
 
