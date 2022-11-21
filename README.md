@@ -21,9 +21,9 @@ Isso irá iniciar os servidores e os respectivos paineis. <br>
 
 Para realizar os testes, basta usar o menu do admin.py e cliente.py<br>
 
-O mecanismo de comunicação entre o cliente.py e o cliente_server.py foi o GRPC <br>
-O mecanismo de comunicação entre o admin.py e o admin_server.py  foi o GRPC <br>
-E entre o cliente_server e admin_server foi utilizado o MQTT <br>
+O mecanismo de comunicação entre o cliente.py e o cliente_server.py é o GRPC <br>
+O mecanismo de comunicação entre o admin.py e o admin_server.py  é o GRPC <br>
+E entre o cliente_server e admin_server é utilizado o MQTT <br>
 
 ### Esquema de dados na tabela
 
