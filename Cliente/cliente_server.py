@@ -96,6 +96,7 @@ class ClientServicer(client_pb2_grpc.ClientServicer):
         global dicionarioPedido, dicionarioClient
         print("Listar Pedido")
         reply = client_pb2.listarPedidosReply()
+        
         return reply
     def apagarPedido(self, request_iterator, context):
         print("Apagar Pedido")
