@@ -97,7 +97,7 @@ class AdminServicer(admin_pb2_grpc.AdminServicer):
             reply.message = 'Produto não existe!'         
         else: 
             novosDados = json.loads(request_iterator.dadosProduto)
-            dadosProduto = {"nome": novosDados['nome'], "quantidade": novosDados['quantidade']}
+            dadosProduto = {"nome": novosDados['nome'], "quantidade": novosDados['quantidade'], "preco": novosDados['preco']}
             dicionarioProduct[request_iterator.produtoId] = json.dumps(dadosProduto)
             client.publish("ModificarProduto", str(dicionarioClient) + '/' + str (dicionarioProduct))
             print("Modificação realizada: " + str(dicionarioProduct))
