@@ -122,11 +122,12 @@ class ClientServicer(client_pb2_grpc.ClientServicer):
         elif request_iterator.ordemId not in dicionarioPedido:
             reply.message = 'Pedido não existe!'        
         else:
-            if dicionarioPedido[request_iterator.ordemId]['clientId'] == request_iterator.clientId:
+            dadosPedido = json.loads(dicionarioPedido[request_iterator.ordemId])
+            if dadosPedido['clientId'] == request_iterator.clientId:
                 for produtoId in dicionarioProduct:            
                         produto = ast.literal_eval(dicionarioProduct[produtoId])         
-                        if produto['nome'] == dicionarioPedido[request_iterator.ordemId]['produto']:
-                            dadosProduto = {"nome": produto['nome'], "quantidade": str(int(produto['quantidade']) + int(str(dicionarioPedido[request_iterator.ordemId]['quantidade']))), "preco": produto['preco']}
+                        if produto['nome'] == dadosPedido['produto']:
+                            dadosProduto = {"nome": produto['nome'], "quantidade": str(int(produto['quantidade']) + int(dadosPedido['quantidade'])), "preco": produto['preco']}
                             dicionarioProduct[produtoId] = json.dumps(dadosProduto)
 
                 dicionarioPedido.pop(request_iterator.ordemId)
