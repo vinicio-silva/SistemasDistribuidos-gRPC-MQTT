@@ -14,7 +14,6 @@ client.connect(mqttBroker)
 dicionarioClient = dict()
 dicionarioProduct = dict()
 dicionarioPedido= dict()
-pedidoArray = []
 
 
 class ClientServicer(client_pb2_grpc.ClientServicer):  
@@ -22,11 +21,12 @@ class ClientServicer(client_pb2_grpc.ClientServicer):
         global dicionarioClient, dicionarioPedido
         print("Criar Pedido")
         reply = client_pb2.criarPedidoReply()
-        if request_iterator.clientId in dicionarioClient:
+        if request_iterator.clientId in dicionarioClient:            
             ordemId = random.randint(0,100)
+            while ordemId in dicionarioPedido:
+                ordemId = random.randint(0,100)
             dadosPedido = {'clientId':  str(request_iterator.clientId), 'produto': '', 'quantidade': '', 'total': '0'}
-            pedidoArray.append([str(ordemId), json.dumps(dadosPedido)])
-            dicionarioPedido = dict(pedidoArray)
+            dicionarioPedido[str(ordemId)] = json.dumps(dadosPedido)
             print("Criação realizada: " + str(dicionarioPedido))
             reply.message = f'Sua ordem do pedido é:{ordemId}'        
         else: 
