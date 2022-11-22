@@ -13,7 +13,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0c\x63lient.proto\"&\n\x12\x63riarPedidoRequest\x12\x10\n\x08\x63lientId\x18\x01 \x01(\t\"#\n\x10\x63riarPedidoReply\x12\x0f\n\x07message\x18\x01 \x01(\t\"`\n\x16modificarPedidoRequest\x12\x10\n\x08\x63lientId\x18\x01 \x01(\t\x12\x0f\n\x07ordemId\x18\x02 \x01(\t\x12\x0f\n\x07produto\x18\x03 \x01(\t\x12\x12\n\nquantidade\x18\x04 \x01(\x05\"\'\n\x14modificarPedidoReply\x12\x0f\n\x07message\x18\x01 \x01(\t\"8\n\x13listarPedidoRequest\x12\x10\n\x08\x63lientId\x18\x01 \x01(\t\x12\x0f\n\x07ordemId\x18\x02 \x01(\t\"$\n\x11listarPedidoReply\x12\x0f\n\x07message\x18\x01 \x01(\t\"8\n\x13\x61pagarPedidoRequest\x12\x10\n\x08\x63lientId\x18\x01 \x01(\t\x12\x0f\n\x07ordemId\x18\x02 \x01(\t\"$\n\x11\x61pagarPedidoReply\x12\x0f\n\x07message\x18\x01 \x01(\t2\xf6\x01\n\x06\x43lient\x12\x35\n\x0b\x63riarPedido\x12\x13.criarPedidoRequest\x1a\x11.criarPedidoReply\x12\x41\n\x0fmodificarPedido\x12\x17.modificarPedidoRequest\x1a\x15.modificarPedidoReply\x12\x38\n\x0clistarPedido\x12\x14.listarPedidoRequest\x1a\x12.listarPedidoReply\x12\x38\n\x0c\x61pagarPedido\x12\x14.apagarPedidoRequest\x1a\x12.apagarPedidoReplyb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0c\x63lient.proto\"&\n\x12\x63riarPedidoRequest\x12\x10\n\x08\x63lientId\x18\x01 \x01(\t\"#\n\x10\x63riarPedidoReply\x12\x0f\n\x07message\x18\x01 \x01(\t\"`\n\x16modificarPedidoRequest\x12\x10\n\x08\x63lientId\x18\x01 \x01(\t\x12\x0f\n\x07ordemId\x18\x02 \x01(\t\x12\x0f\n\x07produto\x18\x03 \x01(\t\x12\x12\n\nquantidade\x18\x04 \x01(\x05\"\'\n\x14modificarPedidoReply\x12\x0f\n\x07message\x18\x01 \x01(\t\"8\n\x13listarPedidoRequest\x12\x10\n\x08\x63lientId\x18\x01 \x01(\t\x12\x0f\n\x07ordemId\x18\x02 \x01(\t\"$\n\x11listarPedidoReply\x12\x0f\n\x07message\x18\x01 \x01(\t\"(\n\x14listarPedidosRequest\x12\x10\n\x08\x63lientId\x18\x01 \x01(\t\"%\n\x12listarPedidosReply\x12\x0f\n\x07message\x18\x01 \x01(\t\"8\n\x13\x61pagarPedidoRequest\x12\x10\n\x08\x63lientId\x18\x01 \x01(\t\x12\x0f\n\x07ordemId\x18\x02 \x01(\t\"$\n\x11\x61pagarPedidoReply\x12\x0f\n\x07message\x18\x01 \x01(\t2\xf6\x01\n\x06\x43lient\x12\x35\n\x0b\x63riarPedido\x12\x13.criarPedidoRequest\x1a\x11.criarPedidoReply\x12\x41\n\x0fmodificarPedido\x12\x17.modificarPedidoRequest\x1a\x15.modificarPedidoReply\x12\x38\n\x0clistarPedido\x12\x14.listarPedidoRequest\x1a\x12.listarPedidoReply\x12\x38\n\x0c\x61pagarPedido\x12\x14.apagarPedidoRequest\x1a\x12.apagarPedidoReplyb\x06proto3')
 
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'client_pb2', globals())
@@ -32,10 +32,14 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _LISTARPEDIDOREQUEST._serialized_end=288
   _LISTARPEDIDOREPLY._serialized_start=290
   _LISTARPEDIDOREPLY._serialized_end=326
-  _APAGARPEDIDOREQUEST._serialized_start=328
-  _APAGARPEDIDOREQUEST._serialized_end=384
-  _APAGARPEDIDOREPLY._serialized_start=386
-  _APAGARPEDIDOREPLY._serialized_end=422
-  _CLIENT._serialized_start=425
-  _CLIENT._serialized_end=671
+  _LISTARPEDIDOSREQUEST._serialized_start=328
+  _LISTARPEDIDOSREQUEST._serialized_end=368
+  _LISTARPEDIDOSREPLY._serialized_start=370
+  _LISTARPEDIDOSREPLY._serialized_end=407
+  _APAGARPEDIDOREQUEST._serialized_start=409
+  _APAGARPEDIDOREQUEST._serialized_end=465
+  _APAGARPEDIDOREPLY._serialized_start=467
+  _APAGARPEDIDOREPLY._serialized_end=503
+  _CLIENT._serialized_start=506
+  _CLIENT._serialized_end=752
 # @@protoc_insertion_point(module_scope)

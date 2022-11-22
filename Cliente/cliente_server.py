@@ -25,7 +25,7 @@ class ClientServicer(client_pb2_grpc.ClientServicer):
         if request_iterator.clientId in dicionarioClient:
             ordemId = random.randint(0,100)
             dadosPedido = {'clientId':  str(request_iterator.clientId), 'produto': '', 'quantidade': '', 'total': '0'}
-            pedidoArray.append([str(ordemId), dadosPedido])
+            pedidoArray.append([str(ordemId), json.dumps(dadosPedido)])
             dicionarioPedido = dict(pedidoArray)
             print("Criação realizada: " + str(dicionarioPedido))
             reply.message = f'Sua ordem do pedido é:{ordemId}'        
@@ -42,35 +42,35 @@ class ClientServicer(client_pb2_grpc.ClientServicer):
         elif request_iterator.ordemId not in dicionarioPedido:
             reply.message = 'Ordem de pedido não existe!'        
         else:
-            if dicionarioPedido[request_iterator.ordemId]['clientId'] == request_iterator.clientId:                
-                    for produtoId in dicionarioProduct:            
-                        produto = ast.literal_eval(dicionarioProduct[produtoId])            
-                        if produto['nome'] == request_iterator.produto:
-                            if request_iterator.quantidade == 0:
-                                dadosProduto = {"nome": produto['nome'], "quantidade": str(int(produto['quantidade']) + int(dicionarioPedido[request_iterator.ordemId]['quantidade'])), "preco": produto['preco']}
-                                dicionarioProduct[produtoId] = json.dumps(dadosProduto)
-                                dicionarioPedido.update({request_iterator.ordemId: {'clientId':  str(request_iterator.clientId), 'produto': '','quantidade': '', 'total': '0'}})
-                                client.publish("ModificarPedido", str(dicionarioProduct))
-                                print("Modificação realizada: " + str(dicionarioPedido))
-                                reply.message = 'Pedido modificado!'
-                            elif request_iterator.quantidade < 0:
-                                reply.message = 'Digite uma quantidade maior ou igual a 0!'                                
-                            elif int(produto['quantidade']) < request_iterator.quantidade:                      
-                                reply.message = 'Quantidade do produto insuficiente!'
-                                break
-                            else:
-                                if (dicionarioPedido[request_iterator.ordemId]['quantidade'] != ''):
-                                    dadosProduto = {"nome": produto['nome'], "quantidade": str(int(produto['quantidade']) + int(dicionarioPedido[request_iterator.ordemId]['quantidade']) - request_iterator.quantidade), "preco": produto['preco']}
-                                else:
-                                    dadosProduto = {"nome": produto['nome'], "quantidade": str(int(produto['quantidade']) - request_iterator.quantidade), "preco": produto['preco']}
-                                dicionarioProduct[produtoId] = json.dumps(dadosProduto)
-                                dicionarioPedido.update({request_iterator.ordemId: {'clientId':  str(request_iterator.clientId), 'produto': request_iterator.produto,'quantidade': request_iterator.quantidade, 'total': str(produto['preco']*request_iterator.quantidade)}})
-                                client.publish("ModificarPedido", str(dicionarioProduct))
-                                print("Modificação realizada: " + str(dicionarioPedido))
-                                reply.message = 'Pedido modificado!'
-                                break
-                    else:
-                        reply.message = 'Produto não cadastrado!'                    
+            dadosPedido = json.loads(dicionarioPedido[request_iterator.ordemId])
+            if dadosPedido['clientId'] == request_iterator.clientId:     
+                for produtoId in dicionarioProduct:   
+                    produto = ast.literal_eval(dicionarioProduct[produtoId])    
+                    if produto['nome'] == request_iterator.produto:
+                        if request_iterator.quantidade == 0:
+                            dadosProduto = {"nome": produto['nome'], "quantidade": str(int(produto['quantidade']) + int(dicionarioPedido[request_iterator.ordemId]['quantidade'])), "preco": produto['preco']}
+                            dicionarioProduct[produtoId] = json.dumps(dadosProduto)
+                            dadosPedido = {'clientId':  str(request_iterator.clientId), 'produto': '','quantidade': '', 'total': '0'}
+                            dicionarioPedido[request_iterator.ordemId] = json.dumps(dadosPedido)
+                            client.publish("ModificarPedido", str(dicionarioProduct))
+                            print("Modificação realizada: " + str(dicionarioPedido))
+                            reply.message = 'Pedido modificado!'
+                        elif request_iterator.quantidade < 0:
+                            reply.message = 'Digite uma quantidade maior ou igual a 0!'                                
+                        elif int(produto['quantidade']) < request_iterator.quantidade:  
+                            reply.message = 'Quantidade do produto insuficiente!'
+                            break
+                        else:                                
+                            dadosProduto = {"nome": produto['nome'], "quantidade": str(int(produto['quantidade']) - request_iterator.quantidade), "preco": produto['preco']}
+                            dicionarioProduct[produtoId] = json.dumps(dadosProduto)
+                            dadosPedido = {'clientId':  str(request_iterator.clientId), 'produto': request_iterator.produto,'quantidade': request_iterator.quantidade, 'total': str(produto['preco']*request_iterator.quantidade)}
+                            dicionarioPedido[request_iterator.ordemId] = json.dumps(dadosPedido)
+                            client.publish("ModificarPedido", str(dicionarioProduct))
+                            print("Modificação realizada: " + str(dicionarioPedido))
+                            reply.message = 'Pedido modificado!'
+                            break
+                else:
+                    reply.message = 'Produto não cadastrado!'                    
             else:
                 reply.message = 'Esse cliente não tem acesso a esse pedido!'
 
@@ -85,8 +85,8 @@ class ClientServicer(client_pb2_grpc.ClientServicer):
         elif request_iterator.ordemId not in dicionarioPedido:
             reply.message = 'Pedido não existe!'        
         else:
-            if dicionarioPedido[request_iterator.ordemId]['clientId'] == request_iterator.clientId:
-                dadosPedido = dicionarioPedido[request_iterator.ordemId]
+            dadosPedido = json.loads(dicionarioPedido[request_iterator.ordemId])
+            if dadosPedido['clientId'] == request_iterator.clientId:
                 reply.message = f"Pedido listado:\nProduto - {dadosPedido['produto']}\nQuantidade - {dadosPedido['quantidade']}\nTotal - {dadosPedido['total']}"
             else:
                 reply.message = 'Esse cliente não tem acesso a esse pedido!'
@@ -94,9 +94,23 @@ class ClientServicer(client_pb2_grpc.ClientServicer):
         return reply
     def listarPedidos(self, request_iterator, context):
         global dicionarioPedido, dicionarioClient
-        print("Listar Pedido")
+        print("Listar Pedidos")
         reply = client_pb2.listarPedidosReply()
         
+        if request_iterator.clientId not in dicionarioClient:
+            reply.message = 'Cliente não existe!'
+        else:
+            pedidosObject = []
+            for ordemId in dicionarioPedido:
+                dadosPedido = ast.literal_eval(dicionarioPedido[ordemId])            
+                if dadosPedido['clientId'] == request_iterator.clientId:
+                    stringAux = f"Pedidos criados: OrdemId - {ordemId} | Total - {dadosPedido['total']}\n"
+                    pedidosObject.append(stringAux)
+            if pedidosObject != []:
+                reply.message = ''.join(pedidosObject)
+            else:
+                reply.message = "Não foram criados nenhum pedido com esse clientId"     
+        print("Pedidos Listados: " + str(dicionarioPedido))   
         return reply
     def apagarPedido(self, request_iterator, context):
         print("Apagar Pedido")

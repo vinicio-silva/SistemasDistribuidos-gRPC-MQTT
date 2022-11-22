@@ -11,8 +11,9 @@ def run():
         print("1. Criar Pedido")
         print("2. Modificar Pedido")
         print("3. Listar Pedido")
-        print("4. Apagar Pedido")
-        print("5. Sair")       
+        print("4. Listar Pedidos")
+        print("5. Apagar Pedido")
+        print("6. Sair")       
 
         while True:
             rpc_call = input("Selecione um serviço: ")
@@ -37,11 +38,16 @@ def run():
                 print(reply.message)
             elif rpc_call == "4":
                 clientId = input("Digite o ID fornecido pelo Administrador:")
+                request = client_pb2.listarPedidosRequest(clientId = clientId)
+                reply = stub.listarPedidos(request)
+                print(reply.message)
+            elif rpc_call == "5":
+                clientId = input("Digite o ID fornecido pelo Administrador:")
                 ordemId = input("Digite a ordem do seu pedido:")
                 request = client_pb2.apagarPedidoRequest(clientId = clientId, ordemId = ordemId)
                 reply = stub.apagarPedido(request)
                 print(reply.message)
-            elif rpc_call == "5":
+            elif rpc_call == "6":
                 break
             else:
                 print("Serviço inválido!")

@@ -29,6 +29,11 @@ class ClientStub(object):
                 request_serializer=client__pb2.listarPedidoRequest.SerializeToString,
                 response_deserializer=client__pb2.listarPedidoReply.FromString,
                 )
+        self.listarPedidos = channel.unary_unary(
+                '/Client/listarPedidos',
+                request_serializer=client__pb2.listarPedidosRequest.SerializeToString,
+                response_deserializer=client__pb2.listarPedidosReply.FromString,
+                )
         self.apagarPedido = channel.unary_unary(
                 '/Client/apagarPedido',
                 request_serializer=client__pb2.apagarPedidoRequest.SerializeToString,
@@ -57,6 +62,12 @@ class ClientServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def listarPedidos(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def apagarPedido(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -80,6 +91,11 @@ def add_ClientServicer_to_server(servicer, server):
                     servicer.listarPedido,
                     request_deserializer=client__pb2.listarPedidoRequest.FromString,
                     response_serializer=client__pb2.listarPedidoReply.SerializeToString,
+            ),
+            'listarPedidos': grpc.unary_unary_rpc_method_handler(
+                    servicer.listarPedidos,
+                    request_deserializer=client__pb2.listarPedidosRequest.FromString,
+                    response_serializer=client__pb2.listarPedidosReply.SerializeToString,
             ),
             'apagarPedido': grpc.unary_unary_rpc_method_handler(
                     servicer.apagarPedido,
@@ -144,6 +160,23 @@ class Client(object):
         return grpc.experimental.unary_unary(request, target, '/Client/listarPedido',
             client__pb2.listarPedidoRequest.SerializeToString,
             client__pb2.listarPedidoReply.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def listarPedidos(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/Client/listarPedidos',
+            client__pb2.listarPedidosRequest.SerializeToString,
+            client__pb2.listarPedidosReply.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 

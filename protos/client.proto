@@ -35,6 +35,14 @@ message listarPedidoReply {
   string message = 1;
 }
 
+message listarPedidosRequest {
+    string clientId = 1;
+}
+
+message listarPedidosReply {
+  string message = 1;
+}
+
 message apagarPedidoRequest {
   string clientId = 1;
     string ordemId = 2;
